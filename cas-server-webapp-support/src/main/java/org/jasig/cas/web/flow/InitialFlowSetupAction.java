@@ -66,6 +66,9 @@ public final class InitialFlowSetupAction extends AbstractAction {
     @Override
     protected Event doExecute(final RequestContext context) throws Exception {
         final HttpServletRequest request = WebUtils.getHttpServletRequest(context);
+        /**
+         * 初始化cookie路径
+         */
         if (!this.pathPopulated) {
             final String contextPath = context.getExternalContext().getContextPath();
             final String cookiePath = StringUtils.hasText(contextPath) ? contextPath + "/" : "/";
@@ -76,12 +79,18 @@ public final class InitialFlowSetupAction extends AbstractAction {
             this.pathPopulated = true;
         }
 
+        /**
+         * 将cookie信息存储到flowscope上下文
+         */
         context.getFlowScope().put(
             "ticketGrantingTicketId", this.ticketGrantingTicketCookieGenerator.retrieveCookieValue(request));
         context.getFlowScope().put(
             "warnCookieValue",
             Boolean.valueOf(this.warnCookieGenerator.retrieveCookieValue(request)));
 
+        /**
+         * 获取本次服务的service
+         */
         final Service service = WebUtils.getService(this.argumentExtractors,
             context);
 

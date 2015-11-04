@@ -1,0 +1,5 @@
+TicketGrantingTicketCookie
+作用：标识用户验证状态
+存储位置：客户端浏览器
+管理者：ticketGrantingTicketCookieGenerator CookieRetrievingCookieGenerator
+配置：ticketGrantingTicketCookieGenerator.xml

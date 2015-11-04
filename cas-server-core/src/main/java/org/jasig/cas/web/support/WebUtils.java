@@ -66,8 +66,12 @@ public final class WebUtils {
     public static WebApplicationService getService(
         final List<ArgumentExtractor> argumentExtractors,
         final HttpServletRequest request) {
+    	/**
+    	 * 循环构造器抽取器，生成Service对象
+    	 */
         for (final ArgumentExtractor argumentExtractor : argumentExtractors) {
-            final WebApplicationService service = argumentExtractor
+            //CasArgumentExtractor
+        	final WebApplicationService service = argumentExtractor
                 .extractService(request);
 
             if (service != null) {

@@ -1,0 +1,45 @@
+Service
+
+Service继承实现链：
+
+I->Principal
+通过验证后创建的代理用户或服务信息的接口
+id-String
+attributes-Map<String,Object>
+	|
+	|
+I->Service
+使用CAS的服务信息接口
+principal-Principal
+	|
+	|
+I->WebApplicationService
+使用CAS的WEB服务信息接口
+response-Response
+artifactId-String
+originalUrl-String
+	|
+	|
+I->SingleLogoutService
+定义可单点登出服务信息接口
+loogedOutAlready-boolean
+	|
+	|
+AC->AbstractWebApplicationService
+	|
+	|
+C->SimpleWebApplicationServiceImpl
+简单WEB应用服务实现类
+-----------------------------------------------------------------------------------------------------------------------------------------
+ArgumentExtractor继承实现链：
+I->ArgumentExtractor
+WebApplicationService构造器，根据请求参数构造WebApplicationService
+配置：argumentExtractorsConfiguration.xml
+	|
+	|
+AC->AbstractArgumentExtractor
+WebApplicationService构造器抽象类
+	|
+	|
+C->CasArgumentExtractor
+CAS默认WebApplicationService构造器

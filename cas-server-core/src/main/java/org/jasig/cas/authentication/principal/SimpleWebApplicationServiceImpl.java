@@ -59,9 +59,12 @@ public final class SimpleWebApplicationServiceImpl extends AbstractWebApplicatio
 
     public static SimpleWebApplicationServiceImpl createServiceFrom(
         final HttpServletRequest request) {
+    	//targetService
         final String targetService = request
             .getParameter(CONST_PARAM_TARGET_SERVICE);
+        //method
         final String method = request.getParameter(CONST_PARAM_METHOD);
+        //service
         final String serviceToUse = StringUtils.hasText(targetService)
             ? targetService : request.getParameter(CONST_PARAM_SERVICE);
 
@@ -69,7 +72,9 @@ public final class SimpleWebApplicationServiceImpl extends AbstractWebApplicatio
             return null;
         }
 
+        //根据URL构造服务ID
         final String id = cleanupUrl(serviceToUse);
+        //ticket
         final String artifactId = request.getParameter(CONST_PARAM_TICKET);
 
         return new SimpleWebApplicationServiceImpl(id, serviceToUse,
