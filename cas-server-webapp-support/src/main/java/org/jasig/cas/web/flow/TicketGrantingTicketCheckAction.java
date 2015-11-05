@@ -74,10 +74,12 @@ public class TicketGrantingTicketCheckAction {
     public Event checkValidity(final RequestContext requestContext) {
 
         final String tgtId = WebUtils.getTicketGrantingTicketId(requestContext);
+        //尚未验证
         if (!StringUtils.hasText(tgtId)) {
             return new Event(this, NOT_EXISTS);
         }
 
+        //验证是否失效
         final Ticket ticket = this.ticketRegistry.getTicket(tgtId);
         return new Event(this, ticket != null && !ticket.isExpired() ? VALID : INVALID);
     }
