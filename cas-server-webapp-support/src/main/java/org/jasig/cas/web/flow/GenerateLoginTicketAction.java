@@ -46,8 +46,10 @@ public class GenerateLoginTicketAction {
     private UniqueTicketIdGenerator ticketIdGenerator;
 
     public final String generate(final RequestContext context) {
+    	//生成登录ID
         final String loginTicket = this.ticketIdGenerator.getNewTicketId(PREFIX);
         logger.debug("Generated login ticket {}", loginTicket);
+        //登录ID存放到FlowContext上下文
         WebUtils.putLoginTicket(context, loginTicket);
         return "generated";
     }

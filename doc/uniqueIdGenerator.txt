@@ -1,0 +1,10 @@
+
+UniqueTicketIdGenerator
+作用：产生全局唯一ID
+配置：uniqueIdGenerators.xml
+
+DefaultUniqueTicketIdGenerator
+默认生成唯一ID
+suffix-前缀
+numberGenerator-数字生成器
+randomStringGenerator-随机字符串生成器
