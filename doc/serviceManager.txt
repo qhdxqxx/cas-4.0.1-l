@@ -1,0 +1,17 @@
+ServicesManager
+作用：存储、抽取、匹配在CAS中注册的使用CAS的服务
+配置：applicationContext.xml
+
+ServiceRegistryDao
+作用：RegisteredService注册与维护
+配置：managementConfigContext.xml
+
+RegisteredService
+作用：托管服务信息类
+id-ID
+name-服务名
+serviceId-服务ID
+description-描述
+evaluationOrder-验证顺序，值越小，权值越高
+allowedToProxy-是否允许代理
+ssoEnabled-是否支持单点登录

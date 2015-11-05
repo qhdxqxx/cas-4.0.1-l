@@ -56,10 +56,14 @@ public final class ServiceAuthorizationCheck extends AbstractAction {
     protected Event doExecute(final RequestContext context) throws Exception {
         final Service service = WebUtils.getService(context);
         //No service == plain /login request. Return success indicating transition to the login form
+        //无Service，直接在CAS中进行登陆
         if (service == null) {
             return success();
         }
-        
+        /**
+         * Service验证：
+         * Service必须存在对应的RegisteredService且该RegisteredService为可用
+         */
         if (this.servicesManager.getAllServices().size() == 0) {
             final String msg = String.format("No service definitions are found in the service manager. "
                     + "Service [%s] will not be automatically authorized to request authentication.", service.getId());
