@@ -1,0 +1,20 @@
+CentralAuthenticationService
+作用：生成、验证票据
+配置：applicationContext.xml
+
+AuthenticationManager
+作用：用户信息验证
+配置：deployerConfigContext.xml
+
+AuthenticationHandler
+作用：验证处理器
+配置：deployerConfigContext.xml
+	|
+	|
+AbstractAuthenticationHandler
+
+
+
+PrincipalResolver
+作用：Principal解析器
+配置：deployerConfigContext.xml

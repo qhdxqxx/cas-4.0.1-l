@@ -528,13 +528,16 @@ public final class CentralAuthenticationServiceImpl implements CentralAuthentica
 
         Assert.notNull(credentials, "credentials cannot be null");
 
+        //用户身份验证
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
+        //生成TicketGrantingTicket
         final TicketGrantingTicket ticketGrantingTicket = new TicketGrantingTicketImpl(
             this.ticketGrantingTicketUniqueTicketIdGenerator
                 .getNewTicketId(TicketGrantingTicket.PREFIX),
             authentication, this.ticketGrantingTicketExpirationPolicy);
 
+        //将TicketGrantingTicket放入票据管理器中
         this.ticketRegistry.addTicket(ticketGrantingTicket);
         return ticketGrantingTicket.getId();
     }

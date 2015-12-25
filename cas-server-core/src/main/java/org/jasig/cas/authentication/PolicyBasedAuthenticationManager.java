@@ -195,7 +195,9 @@ public class PolicyBasedAuthenticationManager implements AuthenticationManager {
     protected AuthenticationBuilder authenticateInternal(final Credential... credentials)
             throws AuthenticationException {
 
+    	//创建Authentication构造器
         final AuthenticationBuilder builder = new AuthenticationBuilder(NULL_PRINCIPAL);
+        //添加Credential信息
         for (final Credential c : credentials) {
             builder.addCredential(new BasicCredentialMetaData(c));
         }
@@ -208,10 +210,12 @@ public class PolicyBasedAuthenticationManager implements AuthenticationManager {
                 if (handler.supports(credential)) {
                     found = true;
                     try {
+                    	//用户信息验证
                         final HandlerResult result = handler.authenticate(credential);
                         builder.addSuccess(handler.getName(), result);
                         logger.info("{} successfully authenticated {}", handler.getName(), credential);
                         resolver = this.handlerResolverMap.get(handler);
+                        //生成Principal信息
                         if (resolver == null) {
                             principal = result.getPrincipal();
                             logger.debug(
@@ -226,6 +230,7 @@ public class PolicyBasedAuthenticationManager implements AuthenticationManager {
                         if (principal != null) {
                             builder.setPrincipal(principal);
                         }
+                        //使用验证策略判断验证是否成功
                         if (this.authenticationPolicy.isSatisfiedBy(builder.build())) {
                             return builder;
                         }
@@ -248,6 +253,7 @@ public class PolicyBasedAuthenticationManager implements AuthenticationManager {
             throw new AuthenticationException(builder.getFailures(), builder.getSuccesses());
         }
         // Apply the configured security policy
+        //使用验证策略判断验证是否成功
         if (!this.authenticationPolicy.isSatisfiedBy(builder.build())) {
             throw new AuthenticationException(builder.getFailures(), builder.getSuccesses());
         }

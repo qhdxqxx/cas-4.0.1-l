@@ -103,6 +103,7 @@ public class AuthenticationViaFormAction {
     public final Event submit(final RequestContext context, final Credential credential,
             final MessageContext messageContext) throws Exception {
         // Validate login ticket
+    	//验证登陆Ticket
         final String authoritativeLoginTicket = WebUtils.getLoginTicketFromFlowScope(context);
         final String providedLoginTicket = WebUtils.getLoginTicketFromRequest(context);
         if (!authoritativeLoginTicket.equals(providedLoginTicket)) {
@@ -111,6 +112,9 @@ public class AuthenticationViaFormAction {
             return newEvent(ERROR);
         }
 
+        /**
+         * 请求renew，则在重新验证后直接发放ServiceTicket
+         */
         final String ticketGrantingTicketId = WebUtils.getTicketGrantingTicketId(context);
         final Service service = WebUtils.getService(context);
         if (StringUtils.hasText(context.getRequestParameters().get("renew")) && ticketGrantingTicketId != null
@@ -135,9 +139,11 @@ public class AuthenticationViaFormAction {
         }
 
         try {
+        	//进行用户身份验证
             final String tgtId = this.centralAuthenticationService.createTicketGrantingTicket(credential);
             WebUtils.putTicketGrantingTicketInFlowScope(context, tgtId);
             putWarnCookieIfRequestParameterPresent(context);
+            //添加警示信息
             final TicketGrantingTicket tgt = (TicketGrantingTicket) this.ticketRegistry.getTicket(tgtId);
             for (final Map.Entry<String, HandlerResult> entry : tgt.getAuthentication().getSuccesses().entrySet()) {
                 for (final Message message : entry.getValue().getWarnings()) {
